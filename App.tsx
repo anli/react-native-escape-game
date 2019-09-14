@@ -1,10 +1,8 @@
 import React from 'react';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
+import {createAppContainer, createSwitchNavigator} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
 import {GameLoginScreen} from './src/screens/GameLoginScreen';
-
-const App = () => {
-  return <GameLoginScreen />;
-};
 
 const theme = {
   ...DefaultTheme,
@@ -13,6 +11,22 @@ const theme = {
     primary: '#FF5A45',
   },
 };
+
+const AuthStack = createStackNavigator(
+  {GameLogin: GameLoginScreen},
+  {headerMode: 'none'},
+);
+
+const App = createAppContainer(
+  createSwitchNavigator(
+    {
+      Auth: AuthStack,
+    },
+    {
+      initialRouteName: 'Auth',
+    },
+  ),
+);
 
 export default () => (
   <PaperProvider theme={theme}>
